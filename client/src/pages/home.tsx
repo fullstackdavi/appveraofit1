@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { challengeData, type DayContent } from "@/data/challengeData";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,11 @@ import {
   Lightbulb,
   X,
   Settings,
-  Sparkles
+  Sparkles,
+  Star,
+  Target,
+  TrendingDown,
+  Heart
 } from "lucide-react";
 
 interface ChallengeState {
@@ -34,10 +39,9 @@ export default function Home() {
   const [challengeState, setChallengeState] = useState<ChallengeState>({
     completedDays: [],
     notes: {},
-    isUnlocked: false
+    isUnlocked: true // Desbloqueado por padrão após compra
   });
   const [showCongrats, setShowCongrats] = useState(false);
-  const [showPayment, setShowPayment] = useState(false);
   const [showReset, setShowReset] = useState(false);
   const [dayNote, setDayNote] = useState("");
 
@@ -59,11 +63,6 @@ export default function Home() {
   }, [selectedDay, challengeState.notes]);
 
   const progress = (challengeState.completedDays.length / 30) * 100;
-  const FREE_DAYS = 10;
-
-  const isDayUnlocked = (day: number) => {
-    return day <= FREE_DAYS || challengeState.isUnlocked;
-  };
 
   const isDayCompleted = (day: number) => {
     return challengeState.completedDays.includes(day);
@@ -104,15 +103,6 @@ export default function Home() {
     }
   };
 
-  const unlockAllDays = () => {
-    setChallengeState(prev => ({ ...prev, isUnlocked: true }));
-    setShowPayment(false);
-    toast({
-      title: "Todos os dias desbloqueados",
-      description: "Agora você tem acesso completo ao desafio de 30 dias",
-    });
-  };
-
   const handleShare = () => {
     const completed = challengeState.completedDays.length;
     const text = `Completei ${completed} dias do Desafio Verão 30D! #DesafioVerao30D`;
@@ -131,7 +121,7 @@ export default function Home() {
       setChallengeState({
         completedDays: [],
         notes: {},
-        isUnlocked: false
+        isUnlocked: true
       });
       setShowReset(false);
       toast({
@@ -145,13 +135,80 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Hero Section - Thank You */}
+      <div className="bg-gradient-to-br from-primary via-accent to-primary/80 text-white py-16 px-4">
+        <div className="container mx-auto max-w-4xl text-center space-y-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full backdrop-blur-sm mb-4">
+            <Sparkles className="w-10 h-10 text-white animate-pulse" />
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+            Parabéns pela sua Compra! 🎉
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-white/90">
+            Você acabou de dar o primeiro passo rumo ao corpo dos seus sonhos
+          </p>
+          
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 mt-8">
+            <h2 className="text-2xl font-bold mb-4 flex items-center justify-center gap-2">
+              <Target className="w-6 h-6" />
+              O Que Você Vai Conquistar
+            </h2>
+            
+            <div className="grid md:grid-cols-3 gap-4 text-left">
+              <div className="flex items-start gap-3">
+                <div className="bg-success/20 rounded-full p-2 mt-1">
+                  <TrendingDown className="w-5 h-5 text-success" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Perda de Peso Real</h3>
+                  <p className="text-sm text-white/80">Elimine até 8kg em 30 dias com método comprovado</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-accent/20 rounded-full p-2 mt-1">
+                  <Dumbbell className="w-5 h-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Corpo Definido</h3>
+                  <p className="text-sm text-white/80">Ganhe massa magra e defina seus músculos</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/20 rounded-full p-2 mt-1">
+                  <Heart className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Saúde e Energia</h3>
+                  <p className="text-sm text-white/80">Melhore sua disposição e qualidade de vida</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+              <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+              <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+              <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+              <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
+            </div>
+            <p className="text-sm text-white/90">Mais de 10.000 pessoas já transformaram seus corpos</p>
+          </div>
+        </div>
+      </div>
+
       {/* Fixed Progress Bar */}
       <div className="sticky top-0 z-40 bg-card border-b border-card-border shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-semibold flex items-center gap-2" data-testid="text-progress-title">
               <Flame className="w-5 h-5 text-accent" />
-              Seu Progresso
+              Seu Progresso no Desafio
             </h2>
             <div className="flex items-center gap-2">
               <Button
@@ -213,87 +270,66 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Unlock Section */}
-        {!challengeState.isUnlocked && (
-          <Card className="mb-8 border-2 border-accent/20 bg-gradient-to-br from-card to-accent/5" data-testid="card-unlock-section">
-            <CardHeader>
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <Lock className="w-6 h-6 text-accent" />
-                Desbloqueie Todos os 30 Dias
-              </CardTitle>
-              <CardDescription className="text-base">
-                Acesse o desafio completo com todas as receitas, treinos e dicas
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col sm:flex-row items-center gap-6">
-                <div className="flex-1 space-y-3">
-                  <div className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-success mt-0.5" />
-                    <span className="text-sm">30 dias de receitas saudáveis</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-success mt-0.5" />
-                    <span className="text-sm">Treinos progressivos personalizados</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-success mt-0.5" />
-                    <span className="text-sm">Dicas diárias de nutricionistas</span>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-accent mb-2" data-testid="text-price">
-                    R$ 29,90
-                  </div>
-                  <Button
-                    size="lg"
-                    onClick={unlockAllDays}
-                    className="bg-accent gap-2 rounded-full"
-                    data-testid="button-unlock-all"
-                  >
-                    <Sparkles className="w-5 h-5" />
-                    Acessar Agora
-                  </Button>
-                </div>
+        {/* Motivation Card */}
+        <Card className="mb-8 border-2 border-accent/20 bg-gradient-to-br from-card to-accent/5">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <Award className="w-6 h-6 text-accent" />
+              Você Está no Caminho Certo!
+            </CardTitle>
+            <CardDescription className="text-base">
+              Siga o plano dia a dia e veja resultados incríveis acontecendo
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-background rounded-lg">
+                <ChefHat className="w-8 h-8 text-primary mx-auto mb-2" />
+                <div className="text-2xl font-bold text-primary">30</div>
+                <div className="text-sm text-muted-foreground">Receitas Exclusivas</div>
               </div>
-            </CardContent>
-          </Card>
-        )}
+              <div className="text-center p-4 bg-background rounded-lg">
+                <Dumbbell className="w-8 h-8 text-accent mx-auto mb-2" />
+                <div className="text-2xl font-bold text-accent">30</div>
+                <div className="text-sm text-muted-foreground">Treinos Progressivos</div>
+              </div>
+              <div className="text-center p-4 bg-background rounded-lg">
+                <Lightbulb className="w-8 h-8 text-success mx-auto mb-2" />
+                <div className="text-2xl font-bold text-success">30</div>
+                <div className="text-sm text-muted-foreground">Dicas de Especialistas</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Day Grid */}
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold mb-2">Seus 30 Dias de Transformação</h2>
+          <p className="text-muted-foreground mb-6">Clique em cada dia para acessar receitas, treinos e dicas exclusivas</p>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           {challengeData.map((day) => {
-            const unlocked = isDayUnlocked(day.day);
             const completed = isDayCompleted(day.day);
 
             return (
               <Card
                 key={day.day}
-                onClick={unlocked ? () => setSelectedDay(day.day) : undefined}
+                onClick={() => setSelectedDay(day.day)}
                 className={`
-                  relative overflow-hidden transition-all duration-200
-                  ${unlocked ? 'cursor-pointer hover-elevate' : 'opacity-60 cursor-not-allowed'}
+                  relative overflow-hidden transition-all duration-200 cursor-pointer hover-elevate
                   ${completed ? 'border-2 border-success' : ''}
                 `}
                 data-testid={`card-day-${day.day}`}
               >
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center justify-center text-center min-h-[100px]">
-                    {!unlocked ? (
-                      <>
-                        <Lock className="w-8 h-8 text-locked mb-2" data-testid={`icon-locked-${day.day}`} />
-                        <span className="text-sm text-muted-foreground">Bloqueado</span>
-                      </>
-                    ) : (
-                      <>
-                        <div className="text-3xl font-bold text-primary mb-2" data-testid={`text-day-number-${day.day}`}>
-                          {day.day}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Dia {day.day}
-                        </div>
-                      </>
-                    )}
+                    <div className="text-3xl font-bold text-primary mb-2" data-testid={`text-day-number-${day.day}`}>
+                      {day.day}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Dia {day.day}
+                    </div>
                   </div>
                   
                   {completed && (
