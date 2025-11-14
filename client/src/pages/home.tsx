@@ -17,7 +17,6 @@ import {
   ChefHat, 
   Dumbbell, 
   Lightbulb,
-  Sparkles,
   X,
   Settings
 } from "lucide-react";
@@ -30,7 +29,6 @@ interface ChallengeState {
 
 export default function Home() {
   const { toast } = useToast();
-  const [showHero, setShowHero] = useState(true);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [challengeState, setChallengeState] = useState<ChallengeState>({
     completedDays: [],
@@ -143,60 +141,6 @@ export default function Home() {
   };
 
   const selectedDayData = selectedDay ? challengeData.find(d => d.day === selectedDay) : null;
-
-  if (showHero) {
-    return (
-      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-accent">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
-        
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-12 text-center">
-          <Sparkles className="w-16 h-16 text-white mb-6 animate-pulse" data-testid="icon-sparkles" />
-          
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg" data-testid="text-hero-title">
-            Emagreça Até o Verão
-          </h1>
-          
-          <div className="flex items-center gap-2 mb-6">
-            <Badge className="bg-white/20 text-white border-white/30 text-lg px-4 py-2 backdrop-blur-sm" data-testid="badge-challenge-days">
-              <Flame className="w-4 h-4 mr-2" />
-              Desafio de 30 Dias
-            </Badge>
-          </div>
-          
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl leading-relaxed drop-shadow" data-testid="text-hero-subtitle">
-            Receitas saudáveis, treinos eficientes e desafios diários para secar até o verão
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Button
-              size="lg"
-              onClick={() => setShowHero(false)}
-              className="bg-white text-primary rounded-full shadow-xl"
-              data-testid="button-enter-challenge"
-            >
-              <Award className="w-5 h-5 mr-2" />
-              Entrar no Desafio
-            </Button>
-          </div>
-          
-          <div className="flex flex-wrap gap-6 justify-center text-white/80 mt-8">
-            <div className="flex items-center gap-2" data-testid="feature-recipes">
-              <ChefHat className="w-5 h-5" />
-              <span className="text-sm">Receitas Diárias</span>
-            </div>
-            <div className="flex items-center gap-2" data-testid="feature-workouts">
-              <Dumbbell className="w-5 h-5" />
-              <span className="text-sm">Treinos Personalizados</span>
-            </div>
-            <div className="flex items-center gap-2" data-testid="feature-tips">
-              <Lightbulb className="w-5 h-5" />
-              <span className="text-sm">Dicas Especializadas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
