@@ -24,8 +24,7 @@ import {
   Star,
   Target,
   TrendingDown,
-  Heart,
-  ChevronRight
+  Heart
 } from "lucide-react";
 
 interface ChallengeState {
@@ -540,51 +539,25 @@ export default function Home() {
               </div>
 
               {/* Complete Button */}
-              <div className="space-y-3">
-                <Button
-                  onClick={() => {
-                    if (selectedDay) {
-                      toggleDayCompletion(selectedDay);
-                      // Se estiver marcando como concluído e não for o último dia, aguardar um momento antes de avançar
-                      if (!isDayCompleted(selectedDay) && selectedDay < 30) {
-                        setTimeout(() => {
-                          setSelectedDay(selectedDay + 1);
-                        }, 1000);
-                      }
-                    }
-                  }}
-                  variant={isDayCompleted(selectedDay!) ? "secondary" : "default"}
-                  className={`w-full gap-2 ${!isDayCompleted(selectedDay!) ? 'bg-success' : ''}`}
-                  size="lg"
-                  data-testid={`button-toggle-complete-${selectedDay}`}
-                >
-                  {isDayCompleted(selectedDay!) ? (
-                    <>
-                      <X className="w-5 h-5" />
-                      Desmarcar como Feito
-                    </>
-                  ) : (
-                    <>
-                      <Check className="w-5 h-5" />
-                      Marcar como Feito
-                    </>
-                  )}
-                </Button>
-
-                {/* Botão Próximo Dia - aparece apenas se o dia estiver concluído e não for o último */}
-                {isDayCompleted(selectedDay!) && selectedDay && selectedDay < 30 && (
-                  <Button
-                    onClick={() => setSelectedDay(selectedDay + 1)}
-                    variant="outline"
-                    className="w-full gap-2"
-                    size="lg"
-                    data-testid={`button-next-day-${selectedDay}`}
-                  >
-                    Próximo Dia
-                    <ChevronRight className="w-5 h-5" />
-                  </Button>
+              <Button
+                onClick={() => selectedDay && toggleDayCompletion(selectedDay)}
+                variant={isDayCompleted(selectedDay!) ? "secondary" : "default"}
+                className={`w-full gap-2 ${!isDayCompleted(selectedDay!) ? 'bg-success' : ''}`}
+                size="lg"
+                data-testid={`button-toggle-complete-${selectedDay}`}
+              >
+                {isDayCompleted(selectedDay!) ? (
+                  <>
+                    <X className="w-5 h-5" />
+                    Desmarcar como Feito
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-5 h-5" />
+                    Marcar como Feito
+                  </>
                 )}
-              </div>
+              </Button>
             </div>
           )}
         </DialogContent>
