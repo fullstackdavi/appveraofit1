@@ -363,15 +363,36 @@ export default function Home() {
 
           {selectedDayData && (
             <div className="space-y-6 pt-4">
-              {/* Tip */}
-              <div className="space-y-2">
+              {/* Tips */}
+              <div className="space-y-3">
                 <div className="flex items-center gap-2 text-accent">
                   <Lightbulb className="w-5 h-5" />
-                  <h3 className="font-semibold text-lg">Dica do Dia</h3>
+                  <h3 className="font-semibold text-lg">5 Dicas do Dia</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed pl-7" data-testid={`text-tip-${selectedDay}`}>
-                  {selectedDayData.tip}
-                </p>
+                <ul className="space-y-2 pl-7">
+                  {selectedDayData.tips.map((tip, i) => (
+                    <li key={i} className="flex items-start gap-2" data-testid={`text-tip-${selectedDay}-${i}`}>
+                      <span className="text-accent font-bold mt-1 flex-shrink-0">{i + 1}.</span>
+                      <span className="text-muted-foreground leading-relaxed">{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Practical Exercises */}
+              <div className="space-y-3 bg-success/5 rounded-lg p-4 border border-success/20">
+                <div className="flex items-center gap-2 text-success">
+                  <Target className="w-5 h-5" />
+                  <h3 className="font-semibold text-lg">6 Exercícios Práticos</h3>
+                </div>
+                <ul className="space-y-2">
+                  {selectedDayData.practicalExercises.map((exercise, i) => (
+                    <li key={i} className="flex items-start gap-2" data-testid={`practical-exercise-${selectedDay}-${i}`}>
+                      <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-success" />
+                      <span className="text-muted-foreground text-sm">{exercise}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Recipe */}
