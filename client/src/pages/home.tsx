@@ -71,8 +71,6 @@ export default function Home() {
   };
 
   const toggleDayCompletion = (day: number) => {
-    const wasCompleted = isDayCompleted(day);
-    
     setChallengeState(prev => {
       const isCompleted = prev.completedDays.includes(day);
       const newCompleted = isCompleted
@@ -95,25 +93,11 @@ export default function Home() {
     });
 
     toast({
-      title: wasCompleted ? "Dia desmarcado" : "Dia concluído",
-      description: wasCompleted 
+      title: isDayCompleted(day) ? "Dia desmarcado" : "Dia concluído",
+      description: isDayCompleted(day) 
         ? `Dia ${day} foi desmarcado` 
         : `Parabéns por completar o Dia ${day}`,
     });
-
-    // Redirecionar para o próximo dia após completar
-    if (!wasCompleted && day < 30) {
-      setTimeout(() => {
-        setSelectedDay(null);
-        setTimeout(() => {
-          setSelectedDay(day + 1);
-        }, 200);
-      }, 1500);
-    } else if (!wasCompleted && day === 30) {
-      setTimeout(() => {
-        setSelectedDay(null);
-      }, 1500);
-    }
   };
 
   const saveNote = () => {
@@ -493,18 +477,6 @@ export default function Home() {
                   <h3 className="font-semibold text-lg">Receita: {selectedDayData.recipe.title}</h3>
                 </div>
                 
-                <div className="flex gap-4 text-sm">
-                  <Badge variant="outline" data-testid={`recipe-servings-${selectedDay}`}>
-                    {selectedDayData.recipe.servings}
-                  </Badge>
-                  <Badge variant="outline" data-testid={`recipe-time-${selectedDay}`}>
-                    {selectedDayData.recipe.prepTime}
-                  </Badge>
-                  <Badge variant="outline" data-testid={`recipe-calories-${selectedDay}`}>
-                    {selectedDayData.recipe.calories}
-                  </Badge>
-                </div>
-                
                 <div>
                   <h4 className="font-medium mb-2 text-sm">Ingredientes:</h4>
                   <ul className="space-y-1 text-sm text-muted-foreground">
@@ -518,22 +490,13 @@ export default function Home() {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2 text-sm">Modo de Preparo:</h4>
+                  <h4 className="font-medium mb-2 text-sm">Preparo:</h4>
                   <ol className="space-y-1 text-sm text-muted-foreground list-decimal list-inside">
                     {selectedDayData.recipe.preparation.map((step, i) => (
                       <li key={i} data-testid={`preparation-${selectedDay}-${i}`}>{step}</li>
                     ))}
                   </ol>
                 </div>
-                
-                {selectedDayData.recipe.tips && (
-                  <div className="bg-accent/5 rounded-lg p-3 border border-accent/20">
-                    <p className="text-sm text-muted-foreground">
-                      <span className="font-medium text-accent">Dica: </span>
-                      {selectedDayData.recipe.tips}
-                    </p>
-                  </div>
-                )}
               </div>
 
               {/* Workout */}

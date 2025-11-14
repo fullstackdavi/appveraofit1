@@ -5,12 +5,8 @@ export interface DayContent {
   practicalExercises: string[];
   recipe: {
     title: string;
-    servings: string;
-    prepTime: string;
-    calories: string;
     ingredients: string[];
     preparation: string[];
-    tips?: string;
   };
   workout: {
     title: string;
@@ -40,26 +36,8 @@ export const challengeData: DayContent[] = [
     ],
     recipe: {
       title: "Smoothie Verde Energizante",
-      servings: "1 porção",
-      prepTime: "5 minutos",
-      calories: "~180 kcal",
-      ingredients: [
-        "1 banana média madura",
-        "1 xícara (50g) de espinafre fresco",
-        "200ml de água de coco natural",
-        "1 colher de sopa de sementes de chia",
-        "1/2 maçã verde (opcional)",
-        "Gelo a gosto"
-      ],
-      preparation: [
-        "Lave bem o espinafre e a maçã",
-        "Corte a banana em rodelas para facilitar",
-        "Coloque todos os ingredientes no liquidificador, começando pelos líquidos",
-        "Bata por 1-2 minutos até ficar homogêneo e cremoso",
-        "Adicione gelo e bata novamente por 30 segundos",
-        "Sirva imediatamente em copo alto"
-      ],
-      tips: "Para um smoothie mais cremoso, congele a banana previamente. A chia pode ser hidratada 10 minutos antes para melhor digestão."
+      ingredients: ["1 banana", "1 xícara de espinafre", "200ml de água de coco", "1 colher de chia"],
+      preparation: ["Bata todos os ingredientes no liquidificador", "Adicione gelo se preferir", "Sirva imediatamente para preservar nutrientes"]
     },
     workout: {
       title: "Caminhada Leve",
@@ -203,32 +181,8 @@ export const challengeData: DayContent[] = [
     ],
     recipe: {
       title: "Sopa Detox",
-      servings: "3-4 porções",
-      prepTime: "30 minutos",
-      calories: "~90 kcal por porção",
-      ingredients: [
-        "2 xícaras de couve picada",
-        "1 abobrinha média cortada em cubos",
-        "1 cebola média picada",
-        "3 dentes de alho amassados",
-        "1 pedaço (3cm) de gengibre fresco ralado",
-        "1 litro de água filtrada",
-        "Sal rosa e pimenta do reino a gosto",
-        "1 colher de sopa de azeite extra virgem",
-        "Suco de 1/2 limão"
-      ],
-      preparation: [
-        "Aqueça o azeite em uma panela média",
-        "Refogue o alho, cebola e gengibre por 2-3 minutos até aromático",
-        "Adicione a abobrinha e refogue por mais 2 minutos",
-        "Acrescente a água e deixe ferver",
-        "Adicione a couve e tempere com sal e pimenta",
-        "Cozinhe em fogo médio por 15-20 minutos",
-        "Desligue o fogo e adicione o suco de limão",
-        "Bata tudo no liquidificador até obter um creme liso",
-        "Sirva quente, pode adicionar sementes de abóbora por cima"
-      ],
-      tips: "Esta sopa pode ser congelada em porções individuais. Reaqueça em banho-maria para preservar nutrientes."
+      ingredients: ["Couve", "Abobrinha", "Cebola", "Alho e gengibre"],
+      preparation: ["Refogue alho, cebola e gengibre", "Adicione vegetais e água", "Cozinhe por 20 min e bata no liquidificador"]
     },
     workout: {
       title: "Caminhada Rápida",
