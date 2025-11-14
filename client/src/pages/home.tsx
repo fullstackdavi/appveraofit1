@@ -324,10 +324,10 @@ export default function Home() {
             return (
               <Card
                 key={day.day}
-                onClick={() => unlocked && setSelectedDay(day.day)}
+                onClick={unlocked ? () => setSelectedDay(day.day) : undefined}
                 className={`
-                  relative overflow-hidden cursor-pointer transition-all duration-200
-                  ${unlocked ? 'hover-elevate' : 'opacity-60'}
+                  relative overflow-hidden transition-all duration-200
+                  ${unlocked ? 'cursor-pointer hover-elevate' : 'opacity-60 cursor-not-allowed'}
                   ${completed ? 'border-2 border-success' : ''}
                 `}
                 data-testid={`card-day-${day.day}`}
