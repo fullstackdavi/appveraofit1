@@ -18,7 +18,8 @@ import {
   Dumbbell, 
   Lightbulb,
   X,
-  Settings
+  Settings,
+  Sparkles
 } from "lucide-react";
 
 interface ChallengeState {
