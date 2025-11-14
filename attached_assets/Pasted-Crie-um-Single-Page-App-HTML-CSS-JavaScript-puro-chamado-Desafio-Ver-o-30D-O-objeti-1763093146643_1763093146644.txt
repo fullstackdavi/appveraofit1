@@ -1,0 +1,73 @@
+Crie um **Single Page App** (HTML + CSS + JavaScript puro) chamado **"Desafio Verão 30D"**. O objetivo é um mini app responsivo que permite ao usuário seguir um cronograma de emagrecimento de 30 dias, marcar dias como concluídos e visualizar progresso. Deve ficar com aparência de app (mobile-first), ter animações suaves e ser exportável como um único projeto HTML/CSS/JS.
+
+REQUISITOS FUNCIONAIS:
+1. Tela inicial / Hero
+  - Título: “Emagreça Até o Verão – Desafio de 30 Dias”
+  - Subtítulo curto explicando (ex: “Receitas, desafios e checkpoints para secar até o verão”)
+  - CTA principal: botão “Entrar no Desafio” que abre a área do cronograma.
+
+2. Cronograma (Área principal)
+  - Grelha com **30 cards numerados** (Dia 1 a Dia 30), 5 colunas em desktop, responsivo em mobile (2 por linha).
+  - Apenas os dias até o dia corrente + dias já desbloqueados devem estar ativos; dias futuros bloqueados (visual de cadeado).
+  - Ao clicar num card ativo, abrir um modal / painel lateral com:
+    • Dica do dia (texto curto)
+    • Receita do dia (ingredientes + preparo curto)
+    • Mini-treino (ex: 15 minutos, nível)
+    • Botão **“Marcar como feito”** que salva estado local
+    • Campo opcional “Notas” (textbox) que salva no localStorage
+  - Botão para marcar/desmarcar feito; quando marcado, o card mostra ✓ e muda visual.
+
+3. Barra de progresso
+  - Barra fixa no topo (ou logo acima do cronograma) mostrando percentual e "X / 30 dias completos".
+  - Atualiza em tempo real quando marcar dias.
+  - Persistência via localStorage (usuário volta e vê progresso).
+
+4. Persistência
+  - Salvar no localStorage:
+    • diasConcluidos: array de IDs de dias
+    • notas por dia
+    • data do último acesso (opcional)
+  - Função para resetar (botão escondido nas configurações).
+
+5. Locking e desbloqueio
+  - Inicialmente disponibilizar os primeiros 10 dias gratuitos; os demais aparecem com cadeado.
+  - A seção de pagamento fictícia (visual) permite "desbloquear" todos os dias simulando compra — ao clicar em “Acessar agora por R$29,90” seta localStorage para desbloqueado = true e libera todos os cards.
+
+6. UI/UX
+  - Mobile-first, cores tema: verão (azul claro, laranja, branco). Visual limpo, moderno.
+  - Cards com leve glassmorphism / sombra e hover suave.
+  - Animações suaves: abrir modal, hover de cards, preenchimento da barra de progresso.
+  - Tipografia moderna (use Google Font, ex: Poppins ou Inter).
+  - Acessibilidade básica: foco no teclado, labels, aria-attributes no modal.
+
+7. Performance & PWA-ready
+  - Código leve, sem frameworks.
+  - Incluir meta tags e um `manifest.json` básico (icone placeholder) para poder instalar como PWA futuramente (opcional).
+
+8. Estrutura do projeto (o que retornar):
+  - `index.html` completo com a marcação do app.
+  - `styles.css` com todos os estilos responsivos e animações.
+  - `app.js` com toda lógica: render dos cards, modais, localStorage, desbloqueio, progress bar.
+  - `manifest.json` básico + `icon-192.png` (placeholder).
+  - Instruções em comentário no topo do `index.html` como testar local (abrir em browser).
+
+CONTEÚDO EXEMPLO (popule automaticamente):
+- Para cada Dia N (1..30) gerar automaticamente:
+  • Dica: texto curto (ex: “Beba 2L de água e caminhe 30 minutos.”)
+  • Receita: título + 3 ingredientes + 3 linhas de preparo
+  • Mini-treino: título + 3 exercícios curtos
+- Os primeiros 10 dias já preenchidos; o restante também preenchido mas bloqueado até desbloquear.
+
+COMPORTAMENTO EXTRA (UX):
+- Ao marcar um dia, mostrar micro-feedback (toast) e animação no card.
+- Mostrar um modal de “Parabéns!” ao completar 30 dias.
+- Botão “Compartilhar progresso” que copia um texto pro clipboard (ex: “Completei X dias do Desafio Verão 30D!”).
+
+ENTREGA:
+- Fornecer o código pronto para colar no Replit (um `index.html` com `styles.css` e `app.js` linkados).
+- Código bem comentado e modular.
+- Deve funcionar offline (apenas front-end) e sem backend.
+
+IMPORTANTE:
+- Não usar frameworks (React / Vue). Só HTML/CSS/JS puro.
+- Não incluir código de pagamento real — apenas a simulação visual e a alteração do estado local.
