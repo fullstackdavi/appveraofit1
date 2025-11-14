@@ -43,6 +43,8 @@ export default function Home() {
   });
   const [showCongrats, setShowCongrats] = useState(false);
   const [showReset, setShowReset] = useState(false);
+  const [showReward, setShowReward] = useState(false);
+  const [rewardDay, setRewardDay] = useState(0);
   const [dayNote, setDayNote] = useState("");
 
   useEffect(() => {
@@ -77,6 +79,14 @@ export default function Home() {
 
       if (!isCompleted && newCompleted.length === 30) {
         setTimeout(() => setShowCongrats(true), 300);
+      }
+
+      // Sistema de recompensas a cada 3 dias
+      if (!isCompleted && newCompleted.length % 3 === 0 && newCompleted.length < 30) {
+        setTimeout(() => {
+          setRewardDay(newCompleted.length);
+          setShowReward(true);
+        }, 300);
       }
 
       return { ...prev, completedDays: newCompleted };
@@ -129,6 +139,71 @@ export default function Home() {
         description: "Todo o progresso foi apagado. Boa sorte no novo desafio",
       });
     }
+  };
+
+  const getRewardBenefits = (days: number) => {
+    const weightLoss = ((days / 30) * 8).toFixed(1);
+    const benefits = [];
+
+    if (days >= 3) {
+      benefits.push(`Perda de peso estimada: -${((days / 30) * 1.5).toFixed(1)}kg a -${((days / 30) * 2).toFixed(1)}kg`);
+      benefits.push("Metabolismo mais acelerado");
+    }
+    
+    if (days >= 6) {
+      benefits.push("Mais energia e disposição");
+      benefits.push("Melhor qualidade do sono");
+    }
+    
+    if (days >= 9) {
+      benefits.push("Redução de inchaço e retenção de líquidos");
+      benefits.push("Melhora na digestão");
+    }
+    
+    if (days >= 12) {
+      benefits.push("Aumento da massa muscular magra");
+      benefits.push("Pele mais hidratada e saudável");
+    }
+    
+    if (days >= 15) {
+      benefits.push("Redução de medidas visível");
+      benefits.push("Mais resistência física");
+    }
+    
+    if (days >= 18) {
+      benefits.push("Melhora no condicionamento cardiovascular");
+      benefits.push("Hábitos saudáveis consolidados");
+    }
+    
+    if (days >= 21) {
+      benefits.push("Transformação corporal notável");
+      benefits.push("Autoestima elevada");
+    }
+    
+    if (days >= 24) {
+      benefits.push("Corpo mais definido e tonificado");
+      benefits.push("Resultados duradouros");
+    }
+    
+    if (days >= 27) {
+      benefits.push("Objetivo quase alcançado!");
+      benefits.push("Mudança de estilo de vida completa");
+    }
+
+    return benefits;
+  };
+
+  const getRewardMotivation = (days: number) => {
+    if (days === 3) return "Você está no caminho certo! Os primeiros 3 dias são os mais difíceis e você conseguiu!";
+    if (days === 6) return "Incrível! Você já está no segundo marco. Seu corpo está começando a responder!";
+    if (days === 9) return "Uau! 9 dias de dedicação total. As mudanças já são visíveis!";
+    if (days === 12) return "Você completou 12 dias! Está na metade do caminho para transformar seu corpo!";
+    if (days === 15) return "Metade do desafio concluída! Você é imparável!";
+    if (days === 18) return "18 dias de pura determinação! Seu corpo está te agradecendo!";
+    if (days === 21) return "3 semanas completas! Os hábitos saudáveis agora fazem parte de você!";
+    if (days === 24) return "24 dias! A reta final chegou e você está arrasando!";
+    if (days === 27) return "27 dias! Faltam apenas 3 dias para a vitória total!";
+    return "Continue assim! Cada dia é uma conquista!";
   };
 
   const selectedDayData = selectedDay ? challengeData.find(d => d.day === selectedDay) : null;
@@ -485,6 +560,69 @@ export default function Home() {
               </Button>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Reward Modal - A cada 3 dias */}
+      <Dialog open={showReward} onOpenChange={setShowReward}>
+        <DialogContent className="sm:max-w-lg text-center" data-testid="modal-reward">
+          <div className="flex flex-col items-center gap-4 py-6">
+            <div className="relative">
+              <Award className="w-20 h-20 text-accent animate-bounce" />
+              <Heart className="w-8 h-8 text-primary absolute -top-2 -right-2 animate-pulse" />
+            </div>
+            
+            <DialogHeader>
+              <DialogTitle className="text-3xl">Parabéns! 🎉</DialogTitle>
+              <DialogDescription className="text-lg pt-2">
+                Você completou {rewardDay} dias do desafio!
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="w-full bg-gradient-to-br from-success/10 to-accent/10 rounded-lg p-4 border border-success/20">
+              <h3 className="font-semibold text-lg mb-3 flex items-center justify-center gap-2">
+                <TrendingDown className="w-5 h-5 text-success" />
+                Benefícios Já Conquistados
+              </h3>
+              <ul className="space-y-2 text-left text-sm">
+                {getRewardBenefits(rewardDay).map((benefit, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-success" />
+                    <span className="text-muted-foreground">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-primary/10 rounded-lg p-4 border border-primary/20 w-full">
+              <p className="text-sm font-medium text-primary">
+                {getRewardMotivation(rewardDay)}
+              </p>
+            </div>
+
+            <div className="text-sm text-muted-foreground">
+              Continue assim! Você está cada vez mais perto do corpo dos seus sonhos.
+            </div>
+            
+            <div className="flex gap-3 w-full">
+              <Button
+                onClick={handleShare}
+                variant="outline"
+                className="flex-1 gap-2"
+                data-testid="button-share-reward"
+              >
+                <Share2 className="w-4 h-4" />
+                Compartilhar
+              </Button>
+              <Button
+                onClick={() => setShowReward(false)}
+                className="flex-1 bg-accent hover:bg-accent/90"
+                data-testid="button-continue-reward"
+              >
+                Continuar Desafio
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
 
