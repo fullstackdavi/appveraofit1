@@ -24,7 +24,8 @@ import {
   Star,
   Target,
   TrendingDown,
-  Heart
+  Heart,
+  ChevronRight
 } from "lucide-react";
 
 interface ChallengeState {
@@ -558,6 +559,22 @@ export default function Home() {
                   </>
                 )}
               </Button>
+
+              {/* Next Day Button */}
+              {selectedDay && selectedDay < 30 && (
+                <Button
+                  onClick={() => {
+                    setSelectedDay(selectedDay + 1);
+                  }}
+                  variant="outline"
+                  className="w-full gap-2"
+                  size="lg"
+                  data-testid={`button-next-day-${selectedDay}`}
+                >
+                  Avançar para Dia {selectedDay + 1}
+                  <ChevronRight className="w-5 h-5" />
+                </Button>
+              )}
             </div>
           )}
         </DialogContent>
